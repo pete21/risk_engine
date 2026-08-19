@@ -1,0 +1,41 @@
+{
+   "scoring_card_name" : {
+     "value" : "scoring_card_01.yaml",
+     "type": "String"},
+   "reference_scale_name" : {
+     "value" : "reference_scale_01.csv",
+     "type": "String"},
+   "conversion_table_name" : {
+     "value" : "conversion_table_01.csv",
+     "type": "String"},
+   "age" : {
+     "value" : "ge_34_lt_44",
+     "type": "String"},
+   "corr_net_income" : {
+     "value" : "ge_2500_lt_3000",
+     "type": "String"},
+   "education" : {
+     "value" : "postgraduate",
+     "type": "String"},
+   "empl_contract" : {
+     "value" : "fixed_term_employment_contract_or_replacement_employment_contract",
+     "type": "String"},
+   "position_contract" : {
+     "value" : "liberal_profession",
+     "type": "String"},
+   "legal_form" : {
+     "value" : "foundation_or_association_or_cooperative",
+     "type": "String"},
+   "marital_status" : {
+     "value" : "widowed",
+     "type": "String"},
+    "nace_employer" : {
+     "value" : "other",
+     "type": "String"},
+   "seniority_employer_mths" : {
+     "value" : "ge_48_lt_60",
+     "type": "String"},
+   "sex" : {
+     "value" : "female",
+     "type": "String"}
+}

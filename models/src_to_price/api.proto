@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package risk.src_to_price;
+
+message ModelParams {
+    string conversion_table_name = 1;
+}
+
+message ModelInput {
+    float src = 1;
+}

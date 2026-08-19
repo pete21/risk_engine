@@ -1,0 +1,8 @@
+syntax = "proto3";
+
+package risk.div_model;
+
+message ModelInput {
+    double dividend = 1;
+    double divisor = 2;
+}

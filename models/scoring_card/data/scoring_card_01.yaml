@@ -1,0 +1,99 @@
+age:
+  ge_25_lt_30: 10
+  ge_30_lt_34: 14
+  ge_34_lt_44: 15
+  ge_44_lt_60: 13
+  ge_60: 13
+  lt_25: 0
+corr_net_income:
+  ge_1000_lt_1500: 2
+  ge_1500_lt_2000: 4
+  ge_2000_lt_2500: 8
+  ge_2500_lt_3000: 12
+  ge_3000_lt_4000: 15
+  ge_4000_lt_6000: 18
+  ge_6000_lt_8000: 18
+  ge_8000: 18
+  lt_1000: 0
+education:
+  incomplete_primary: 0
+  postgraduate: 30
+  primary: 0
+  secondary: 11
+  undergraduate: 21
+  vocational: 11
+empl_contract&position_contract:
+  business_activity_in_the_field_of_programming_or_it&laborer: 22
+  business_activity_in_the_field_of_programming_or_it&liberal_profession: 22
+  business_activity_in_the_field_of_programming_or_it&management_or_independent_position: 22
+  business_activity_in_the_field_of_programming_or_it&other: 0
+  business_activity_in_the_field_of_programming_or_it&white_collar_worker: 22
+  contract_of_mandate&laborer: 0
+  contract_of_mandate&liberal_profession: 0
+  contract_of_mandate&management_or_independent_position: 0
+  contract_of_mandate&other: 0
+  contract_of_mandate&white_collar_worker: 0
+  contract_of_specific_work&laborer: 0
+  contract_of_specific_work&liberal_profession: 0
+  contract_of_specific_work&management_or_independent_position: 0
+  contract_of_specific_work&other: 0
+  contract_of_specific_work&white_collar_worker: 0
+  employment_contract_for_an_indefinite_period&laborer: 0
+  employment_contract_for_an_indefinite_period&liberal_profession: 22
+  employment_contract_for_an_indefinite_period&management_or_independent_position: 22
+  employment_contract_for_an_indefinite_period&other: 0
+  employment_contract_for_an_indefinite_period&white_collar_worker: 20
+  fixed_term_employment_contract_or_replacement_employment_contract&laborer: 0
+  fixed_term_employment_contract_or_replacement_employment_contract&liberal_profession: 22
+  fixed_term_employment_contract_or_replacement_employment_contract&management_or_independent_position: 22
+  fixed_term_employment_contract_or_replacement_employment_contract&other: 0
+  fixed_term_employment_contract_or_replacement_employment_contract&white_collar_worker: 20
+  other&laborer: 0
+  other&liberal_profession: 0
+  other&management_or_independent_position: 0
+  other&other: 0
+  other&white_collar_worker: 0
+  other_business_activity&laborer: 14
+  other_business_activity&liberal_profession: 14
+  other_business_activity&management_or_independent_position: 14
+  other_business_activity&other: 0
+  other_business_activity&white_collar_worker: 14
+legal_form:
+  anonymous_society: 35
+  budget_enity: 50
+  foundation_or_association_or_cooperative: 26
+  general_partnership_or_limited_partnership_or_partnership_limited_by_shares_or_limited_liability_partnership: 0
+  private_limited_company: 20
+  sole_proprietorship_or_private_partnership: 0
+marital_status:
+  divorced: 16
+  informal_couple: 0
+  married_with_separate_property: 30
+  married_without_separate_property: 53
+  separated: 16
+  single: 0
+  widowed: 16
+nace_employer:
+  '01': 0
+  '02': 0
+  '03': 0
+  '41': 0
+  '42': 0
+  '43': 0
+  '45': 0
+  '46': 0
+  '67': 0
+  '84': 47
+  '85': 47
+  other: 23
+seniority_employer_mths:
+  ge_108: 35
+  ge_12_lt_24: 15
+  ge_24_lt_48: 22
+  ge_48_lt_60: 30
+  ge_60_lt_72: 30
+  ge_72_lt_108: 30
+  lt_12: 0
+sex:
+  female: 7
+  male: 0

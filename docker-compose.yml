@@ -1,0 +1,83 @@
+version: '3.2'
+services:
+
+  front-envoy:
+    build:
+      context: .
+      dockerfile: Dockerfile-frontenvoy
+    networks:
+      - envoymesh
+    expose:
+      - "10000"
+      - "8001"
+    ports:
+      - "10000:10000"
+      - "8001:8001"
+
+  service1:
+    build:
+      context: .
+      dockerfile: Dockerfile-service
+    volumes:
+      - type: volume
+        source: models_volume
+        target: /app/models
+        volume:
+          nocopy: true
+    networks:
+      envoymesh:
+        aliases:
+          - service1
+    environment:
+      - SERVICE_NAME=1
+      - MAX_WORKERS=10
+    expose:
+      - "80"
+      - "8081"
+
+  models:
+    build:
+      context: .
+      dockerfile: Dockerfile-models
+    volumes:
+      - type: volume
+        source: models_volume
+        target: /app/models
+    networks:
+      - envoymesh
+
+  statsd_exporter:
+    image: prom/statsd-exporter
+    ports:
+    - "9125:9125/udp"
+    - "9102:9102"
+    networks:
+      - envoymesh
+
+  prometheus:
+    image: prom/prometheus
+    volumes:
+      - ./prometheus/config.yaml:/etc/prometheus.yaml
+    ports:
+    - "9090:9090"
+    networks:
+      - envoymesh
+    command: "--config.file=/etc/prometheus.yaml"
+
+  grafana:
+    image: grafana/grafana
+    volumes:
+      - ./grafana/grafana.ini:/etc/grafana/grafana.ini
+      - ./grafana/datasource.yaml:/etc/grafana/provisioning/datasources/datasource.yaml
+      - ./grafana/dashboard.yaml:/etc/grafana/provisioning/dashboards/dashboard.yaml
+      - ./grafana/dashboard.json:/etc/grafana/provisioning/dashboards/dashboard.json
+    ports:
+      - "3000:3000"
+    networks:
+      - envoymesh
+
+volumes:
+  models_volume:
+
+networks:
+  envoymesh:

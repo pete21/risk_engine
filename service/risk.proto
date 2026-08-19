@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package risk;
+
+service RiskEngine {
+    rpc Calculate (CalculationRequest) returns (CalculationResponse) {}
+}
+
+message CalculationRequest {
+    string model_name = 1;
+    bytes model_parameters = 2;
+    bytes model_input = 3;
+}
+
+message CalculationResponse {
+    map<string, double> values = 1;
+}

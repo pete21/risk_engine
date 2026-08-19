@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package risk.portfolio_var;
+
+message ModelParams {
+        uint32 number_of_assets = 1;
+        double alpha = 2;
+        uint32 time_perspective = 3;
+}
+
+message ModelInput {
+    repeated double asset_prices = 1;
+    repeated double asset_weights = 2;
+}

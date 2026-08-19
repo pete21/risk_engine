@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1rmndzg" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.1.2">
+  <bpmn:process id="bpm_diagram_03f" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>SequenceFlow_1gtwqe4</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_1gtwqe4" sourceRef="StartEvent_1" targetRef="Calculate_PD" />
+    <bpmn:serviceTask id="Calculate_PD" name="Calculate PD" camunda:type="external" camunda:topic="riskengine">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="model_name">logistic_regression</camunda:inputParameter>
+          <camunda:inputParameter name="result" />
+          <camunda:outputParameter name="pd">${result}</camunda:outputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_1gtwqe4</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0nrb306</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="SequenceFlow_0nrb306" sourceRef="Calculate_PD" targetRef="check_pd" />
+    <bpmn:endEvent id="EndEvent_0ajna93">
+      <bpmn:incoming>SequenceFlow_1alo9xf</bpmn:incoming>
+      <bpmn:terminateEventDefinition />
+    </bpmn:endEvent>
+    <bpmn:intermediateCatchEvent id="check_pd" name="Check if PD is below threshold 0.3">
+      <bpmn:incoming>SequenceFlow_0nrb306</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1s2dp01</bpmn:outgoing>
+      <bpmn:conditionalEventDefinition>
+        <bpmn:condition xsi:type="bpmn:tFormalExpression">#{pd  &lt;= 0.3}</bpmn:condition>
+      </bpmn:conditionalEventDefinition>
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_1s2dp01" sourceRef="check_pd" targetRef="Calculate_credit_price" />
+    <bpmn:serviceTask id="Calculate_credit_price" name="Calculate credit price" camunda:type="external" camunda:topic="riskengine">
+      <bpmn:extensionElements>
+        <camunda:inputOutput>
+          <camunda:inputParameter name="model_name">risk_based_pricing</camunda:inputParameter>
+          <camunda:inputParameter name="result" />
+          <camunda:outputParameter name="final_result">${result}</camunda:outputParameter>
+        </camunda:inputOutput>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_1s2dp01</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_008xt4t</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="SequenceFlow_008xt4t" sourceRef="Calculate_credit_price" targetRef="Finalize" />
+    <bpmn:sequenceFlow id="SequenceFlow_1alo9xf" sourceRef="Finalize" targetRef="EndEvent_0ajna93" />
+    <bpmn:serviceTask id="Finalize" name="Finalize" camunda:type="external" camunda:topic="${execution.getProcessInstanceId()}">
+      <bpmn:incoming>SequenceFlow_008xt4t</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1alo9xf</bpmn:outgoing>
+    </bpmn:serviceTask>
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="bpm_diagram_03f">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="156" y="103" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1gtwqe4_di" bpmnElement="SequenceFlow_1gtwqe4">
+        <di:waypoint x="192" y="121" />
+        <di:waypoint x="239" y="121" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_06xjhlu_di" bpmnElement="Calculate_PD">
+        <dc:Bounds x="239" y="81" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0nrb306_di" bpmnElement="SequenceFlow_0nrb306">
+        <di:waypoint x="339" y="121" />
+        <di:waypoint x="391" y="121" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="EndEvent_083jyzh_di" bpmnElement="EndEvent_0ajna93">
+        <dc:Bounds x="776" y="103" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="IntermediateCatchEvent_082n3ln_di" bpmnElement="check_pd">
+        <dc:Bounds x="391" y="103" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="371" y="146" width="77" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1s2dp01_di" bpmnElement="SequenceFlow_1s2dp01">
+        <di:waypoint x="427" y="121" />
+        <di:waypoint x="479" y="121" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_07expuu_di" bpmnElement="Calculate_credit_price">
+        <dc:Bounds x="479" y="81" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_008xt4t_di" bpmnElement="SequenceFlow_008xt4t">
+        <di:waypoint x="579" y="121" />
+        <di:waypoint x="631" y="121" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNEdge id="SequenceFlow_1alo9xf_di" bpmnElement="SequenceFlow_1alo9xf">
+        <di:waypoint x="731" y="121" />
+        <di:waypoint x="776" y="121" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_17r2uwd_di" bpmnElement="Finalize">
+        <dc:Bounds x="631" y="81" width="100" height="80" />
+      </bpmndi:BPMNShape>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

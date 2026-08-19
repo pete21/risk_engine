@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package risk.scoring_card;
+
+message ModelParams {
+    string scoring_card_name = 1;
+}
+
+message ModelInput {
+    message Pair {
+        string key = 1;
+        string value = 2;
+    }
+    repeated Pair attributes_list = 1;
+}

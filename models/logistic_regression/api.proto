@@ -1,0 +1,14 @@
+syntax = "proto3";
+
+package risk.logistic_regression;
+
+message ModelParams {
+}
+
+message ModelInput {
+    message Pair {
+        string key = 1;
+        string value = 2;
+    }
+    repeated Pair risk_attributes_list = 1;
+}

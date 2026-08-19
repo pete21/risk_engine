@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package risk.iris_model;
+
+message ModelInput {
+    double sepal_length = 1;
+    double sepal_width = 2;
+    double petal_length = 3;
+    double petal_width = 4;
+}

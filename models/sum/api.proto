@@ -1,0 +1,7 @@
+syntax = "proto3";
+
+package risk.sum_model;
+
+message ModelInput {
+    repeated double values = 1;
+}

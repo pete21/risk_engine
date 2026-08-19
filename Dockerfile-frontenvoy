@@ -1,0 +1,7 @@
+FROM envoyproxy/envoy-alpine
+
+#RUN apt-get update && apt-get -q install -y --no-install-recommends \
+#    curl \
+#    python3
+COPY ./front-envoy.yaml /etc/front-envoy.yaml
+CMD /usr/local/bin/envoy -c /etc/front-envoy.yaml --service-cluster front-envoy --service-node front-envoy 

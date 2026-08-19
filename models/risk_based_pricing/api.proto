@@ -1,0 +1,10 @@
+syntax = "proto3";
+
+package risk.risk_based_pricing;
+
+message ModelParams {
+}
+
+message ModelInput {
+    float pd = 1;
+}

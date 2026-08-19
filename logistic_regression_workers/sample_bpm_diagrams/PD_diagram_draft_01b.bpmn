@@ -1,0 +1,114 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<bpmn:definitions xmlns:bpmn="http://www.omg.org/spec/BPMN/20100524/MODEL" xmlns:bpmndi="http://www.omg.org/spec/BPMN/20100524/DI" xmlns:dc="http://www.omg.org/spec/DD/20100524/DC" xmlns:camunda="http://camunda.org/schema/1.0/bpmn" xmlns:di="http://www.omg.org/spec/DD/20100524/DI" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" id="Definitions_1rmndzg" targetNamespace="http://bpmn.io/schema/bpmn" exporter="Camunda Modeler" exporterVersion="3.1.0">
+  <bpmn:process id="PD_from_customer_data_b_07" isExecutable="true">
+    <bpmn:startEvent id="StartEvent_1">
+      <bpmn:outgoing>SequenceFlow_1gtwqe4</bpmn:outgoing>
+    </bpmn:startEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_1gtwqe4" sourceRef="StartEvent_1" targetRef="Enter_data" />
+    <bpmn:userTask id="Enter_data" name="Enter customer data">
+      <bpmn:extensionElements>
+        <camunda:formData>
+          <camunda:formField id="bank_account" label="Bank Account" type="enum" defaultValue="nie">
+            <camunda:value id="nie" name="nie" />
+            <camunda:value id="tak" name="tak" />
+          </camunda:formField>
+          <camunda:formField id="duration_in_month" label="Duration in Month" type="long" defaultValue="6" />
+          <camunda:formField id="credit_history" label="Credit History" type="enum" defaultValue="payed_or_none">
+            <camunda:value id="exist_other" name="istniejące pożyczki (inny pożyczkodawca)" />
+            <camunda:value id="delays" name="opóźnienia w spłacie w przeszłości" />
+            <camunda:value id="exist_no_delays" name="istniejące pożyczki spłacane w terminie do tej pory" />
+            <camunda:value id="payed_or_none" name="wszystkie pożyczki spłacone w terminie%,%brak pożyczek" />
+          </camunda:formField>
+          <camunda:formField id="purpose" label="Purpose" type="enum" defaultValue="other">
+            <camunda:value id="retraining" name="przekwalifikowanie" />
+            <camunda:value id="radio_or_tv_set" name="radio, telewizor" />
+            <camunda:value id="used_car" name="samochód (używany)" />
+            <camunda:value id="education" name="edukacja" />
+            <camunda:value id="furniture_or_equipment" name="meble, wyposażenie" />
+            <camunda:value id="new_car" name="samochód (nowy)" />
+            <camunda:value id="business" name="biznes" />
+            <camunda:value id="home_appliances" name="sprzęt gospodarstwa domowego" />
+            <camunda:value id="repairs" name="naprawy" />
+            <camunda:value id="other" name="inne" />
+          </camunda:formField>
+          <camunda:formField id="property" label="Property" type="enum" defaultValue="unknown_or_none">
+            <camunda:value id="real_estate" name="nieruchomość" />
+            <camunda:value id="savings_agreement_or_life_insurance" name="umowa oszczędnościowa/polisa na życie" />
+            <camunda:value id="car_or_other" name="samochód/inne nie zawarte w oszczędnościach" />
+            <camunda:value id="unknown_or_none" name="nieznane lub brak" />
+          </camunda:formField>
+          <camunda:formField id="housing" label="Housing" type="enum" defaultValue="rent">
+            <camunda:value id="own" name="własne" />
+            <camunda:value id="rent" name="wynajmowane" />
+            <camunda:value id="free" name="bezpłatne" />
+          </camunda:formField>
+          <camunda:formField id="savings" label="Savings" type="enum" defaultValue="unknown_or_none">
+            <camunda:value id="unknown_or_none" name="nieznane lub brak oszczędności" />
+            <camunda:value id="less_than_1000" name="... &#60; 1000" />
+            <camunda:value id="from_1000_to_5000" name="1000 &#60;= ... &#60; 5000" />
+            <camunda:value id="from_5000_to_10000" name="5000 &#60;= ... &#60; 10000" />
+            <camunda:value id="at_least_10000" name="... &#62;= 10000" />
+          </camunda:formField>
+        </camunda:formData>
+      </bpmn:extensionElements>
+      <bpmn:incoming>SequenceFlow_1gtwqe4</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1v2h2q2</bpmn:outgoing>
+    </bpmn:userTask>
+    <bpmn:sequenceFlow id="SequenceFlow_1v2h2q2" sourceRef="Enter_data" targetRef="Calculate_PD" />
+    <bpmn:serviceTask id="Calculate_PD" name="Calculate PD" camunda:type="external" camunda:topic="calculate_pd">
+      <bpmn:incoming>SequenceFlow_1v2h2q2</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_0nrb306</bpmn:outgoing>
+    </bpmn:serviceTask>
+    <bpmn:sequenceFlow id="SequenceFlow_0nrb306" sourceRef="Calculate_PD" targetRef="check_pd" />
+    <bpmn:endEvent id="EndEvent_0ajna93">
+      <bpmn:incoming>SequenceFlow_1s2dp01</bpmn:incoming>
+      <bpmn:terminateEventDefinition />
+    </bpmn:endEvent>
+    <bpmn:intermediateCatchEvent id="check_pd" name="Check if PD is below threshold 0.3">
+      <bpmn:incoming>SequenceFlow_0nrb306</bpmn:incoming>
+      <bpmn:outgoing>SequenceFlow_1s2dp01</bpmn:outgoing>
+      <bpmn:conditionalEventDefinition>
+        <bpmn:condition xsi:type="bpmn:tFormalExpression">#{pd &lt;= 0.3}</bpmn:condition>
+      </bpmn:conditionalEventDefinition>
+    </bpmn:intermediateCatchEvent>
+    <bpmn:sequenceFlow id="SequenceFlow_1s2dp01" sourceRef="check_pd" targetRef="EndEvent_0ajna93" />
+  </bpmn:process>
+  <bpmndi:BPMNDiagram id="BPMNDiagram_1">
+    <bpmndi:BPMNPlane id="BPMNPlane_1" bpmnElement="PD_from_customer_data_b_07">
+      <bpmndi:BPMNShape id="_BPMNShape_StartEvent_2" bpmnElement="StartEvent_1">
+        <dc:Bounds x="179" y="103" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1gtwqe4_di" bpmnElement="SequenceFlow_1gtwqe4">
+        <di:waypoint x="215" y="121" />
+        <di:waypoint x="279" y="121" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="UserTask_1awg3ja_di" bpmnElement="Enter_data">
+        <dc:Bounds x="279" y="81" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1v2h2q2_di" bpmnElement="SequenceFlow_1v2h2q2">
+        <di:waypoint x="379" y="121" />
+        <di:waypoint x="448" y="121" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="ServiceTask_06xjhlu_di" bpmnElement="Calculate_PD">
+        <dc:Bounds x="448" y="81" width="100" height="80" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_0nrb306_di" bpmnElement="SequenceFlow_0nrb306">
+        <di:waypoint x="548" y="121" />
+        <di:waypoint x="617" y="121" />
+      </bpmndi:BPMNEdge>
+      <bpmndi:BPMNShape id="EndEvent_083jyzh_di" bpmnElement="EndEvent_0ajna93">
+        <dc:Bounds x="717" y="103" width="36" height="36" />
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNShape id="IntermediateCatchEvent_082n3ln_di" bpmnElement="check_pd">
+        <dc:Bounds x="617" y="103" width="36" height="36" />
+        <bpmndi:BPMNLabel>
+          <dc:Bounds x="597" y="146" width="77" height="40" />
+        </bpmndi:BPMNLabel>
+      </bpmndi:BPMNShape>
+      <bpmndi:BPMNEdge id="SequenceFlow_1s2dp01_di" bpmnElement="SequenceFlow_1s2dp01">
+        <di:waypoint x="653" y="121" />
+        <di:waypoint x="717" y="121" />
+      </bpmndi:BPMNEdge>
+    </bpmndi:BPMNPlane>
+  </bpmndi:BPMNDiagram>
+</bpmn:definitions>

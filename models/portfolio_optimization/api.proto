@@ -1,0 +1,30 @@
+syntax = "proto3";
+
+package risk.portfolio_optimization;
+
+message ModelParams {
+        enum MinimizationType {
+        VARIANCE = 0;
+        RETURN_TO_SD_RATIO = 1;
+    }
+        enum MinimizationAlgorithm {
+            TRUST_CONSTR = 0;
+            SLSQP = 1;
+            COBYLA = 2;
+        }
+
+        MinimizationType type = 1;
+        MinimizationAlgorithm algorithm = 2;
+        uint32 number_of_assets = 3;
+}
+
+message ModelInput {
+    message Constraint {
+        uint32 weight_index =1;
+        double interval_lower_bound = 2;
+        double interval_upper_bound = 3;
+    }
+    repeated double variances = 1;
+    repeated double returns = 2;
+    repeated Constraint additional_constraints = 3;
+}

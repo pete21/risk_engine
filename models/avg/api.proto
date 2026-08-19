@@ -1,0 +1,16 @@
+syntax = "proto3";
+
+package risk.avg_model;
+
+message ModelParams {
+    enum AverageType {
+        ARITHMETIC = 0;
+        GEOMETRIC = 1;
+    }
+
+    AverageType type = 1;
+}
+
+message ModelInput {
+    repeated double values = 1;
+}

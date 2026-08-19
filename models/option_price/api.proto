@@ -1,0 +1,23 @@
+syntax = "proto3";
+
+package risk.option_price;
+
+/*
+    S: spot price
+    K: strike price
+    T: time to maturity
+    r: interest rate
+    q: rate of continuous dividend paying asset 
+    sigma: volatility of underlying asset
+    option: call | put
+*/
+
+message ModelInput {
+    double S = 1;
+    double K = 2;
+    double T = 3;
+    double r = 4;
+    double q = 5;
+    double sigma = 6;
+    string option = 7;
+}

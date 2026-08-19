@@ -1,0 +1,11 @@
+syntax = "proto3";
+
+package risk.scoring_to_pd_src;
+
+message ModelParams {
+    string reference_scale_name = 1;
+}
+
+message ModelInput {
+    float score = 1;
+}

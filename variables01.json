@@ -1,0 +1,23 @@
+{
+   "bank_account" : {
+     "value" : "nie",
+     "type": "String"},
+   "duration_in_month" : {
+     "value" : "6",
+     "type": "String"},
+   "credit_history" : {
+     "value" : "payed_or_none",
+     "type": "String"},
+   "purpose" : {
+     "value" : "other",
+     "type": "String"},
+   "property" : {
+     "value" : "unknown_or_none",
+     "type": "String"},
+   "housing" : {
+     "value" : "rent",
+     "type": "String"},
+   "savings" : {
+     "value" : "unknown_or_none",
+     "type": "String"}
+}
